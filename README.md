@@ -1,15 +1,18 @@
 # azure-lab
 
-Terraform labs for Azure infrastructure.
+Terraform lab for Azure infrastructure.
 
-## Labs
+## What it builds
 
-- `lab-minimal/`: VM + VNet + NSG + public IP
+- Resource group
+- Virtual network and subnet
+- Network security group
+- Public IP and network interface
+- Linux virtual machine with SSH access
 
 ## Usage
 
 ```bash
-cd lab-minimal
 terraform init
 terraform plan
 terraform apply
@@ -17,10 +20,9 @@ terraform apply
 terraform destroy
 ```
 
-## What it demonstrates
+## Files
 
-- `terraform init`, `plan`, `apply`, `destroy` lifecycle
-- Azure provider configuration
-- Virtual machine provisioning
-- Virtual Network (VNet) and subnet
-- Network Security Group (NSG)
+- `main.tf`: core Azure resources
+- `variables.tf`: input variables
+- `terraform.tfvars.example`: starter values
+- `outputs.tf`: useful outputs after apply
