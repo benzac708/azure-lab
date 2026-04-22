@@ -20,6 +20,11 @@ terraform apply
 terraform destroy
 ```
 
+## Verification
+
+- Validated with `terraform init`, `terraform validate`, and `terraform plan`
+- Live apply requires an active writable Azure subscription
+
 ## Files
 
 - `main.tf`: core Azure resources
