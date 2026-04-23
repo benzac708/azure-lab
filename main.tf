@@ -18,7 +18,7 @@ locals {
   tags = {
     Project   = var.project_name
     ManagedBy = "terraform"
-    Purpose   = "azure-lab-minimal"
+    Purpose   = "azure-lab-aks"
   }
 }
 
@@ -41,6 +41,34 @@ resource "azurerm_subnet" "this" {
   resource_group_name  = azurerm_resource_group.this.name
   virtual_network_name = azurerm_virtual_network.this.name
   address_prefixes     = [var.subnet_cidr]
+}
+
+resource "azurerm_kubernetes_cluster" "this" {
+  name                = "${local.name_prefix}-aks"
+  location            = azurerm_resource_group.this.location
+  resource_group_name = azurerm_resource_group.this.name
+  dns_prefix          = "${local.name_prefix}-aks"
+  kubernetes_version   = "1.35"
+  sku_tier            = "Free"
+
+  default_node_pool {
+    name                = "default"
+    node_count          = var.aks_node_count
+    vm_size             = var.aks_vm_size
+    vnet_subnet_id      = azurerm_subnet.this.id
+    enable_auto_scaling = false
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  network_profile {
+    network_plugin     = "azure"
+    load_balancer_sku = "standard"
+  }
+
+  tags = local.tags
 }
 
 resource "azurerm_network_security_group" "this" {

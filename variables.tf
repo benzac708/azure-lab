@@ -51,3 +51,15 @@ variable "subnet_cidr" {
   type        = string
   default     = "10.20.1.0/24"
 }
+
+variable "aks_node_count" {
+  description = "Number of nodes in AKS cluster"
+  type        = number
+  default     = 1
+}
+
+variable "aks_vm_size" {
+  description = "VM size for AKS nodes"
+  type        = string
+  default     = "Standard_B2s"
+}
